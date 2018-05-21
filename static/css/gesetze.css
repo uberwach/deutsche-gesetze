@@ -1,0 +1,18 @@
+body {
+    margin-top: 2cm;
+    margin-bottom: 2cm;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+div.normhead {
+    font-weight: BOLD;
+}
+
+div.normtext {
+    text-align: justify;
+}
+
+div.abs {
+    margin-right: 15%;
+}
