@@ -2,13 +2,6 @@
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
-def head_option(xs):
-    if xs:
-        return xs[0]
-
-    return None
-
-
 class BgbSpider(CrawlSpider):
     name = 'bgb'
     allowed_domains = ['www.gesetze-im-internet.de']
