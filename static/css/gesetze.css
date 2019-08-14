@@ -1,18 +1,35 @@
 body {
-    margin-top: 2cm;
-    margin-bottom: 2cm;
     margin-left: 15%;
     margin-right: 15%;
 }
 
-div.normhead {
+.norm {
+
+}
+.normhead {
     font-weight: BOLD;
 }
 
-div.normtext {
-    text-align: justify;
+.normtext {
+    margin: 5px;
 }
 
-div.abs {
-    margin-right: 15%;
+.abs {
+    text-align: justify;
+    margin: 10px;
+}
+
+.subbox {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: stretch;
+}
+
+.sub {
+    margin: 10px;
+    width: 30%;
+}
+
+.subsub {
+    font-size: 8pt;
 }
