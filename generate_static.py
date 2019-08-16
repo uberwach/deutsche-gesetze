@@ -4,17 +4,18 @@ import json
 import os
 import itertools
 from glob import glob
+from annotations import Annotations
 
-DATA_DIR = os.path.join(os.path.pardir, "data")
-STATIC_DIR = os.path.join(os.path.pardir, "static")
+DATA_DIR = "data"
+STATIC_DIR = "static"
+ANNOTATIONS = Annotations()
+ALPHABET = [chr(ord('a') + k) for k in range(26)]
 
 
 def read_json(name):
     FILE_PATH = os.path.join(DATA_DIR, "%s.json" % name)
     data = json.load(open(FILE_PATH, "r"))
     return data
-
-ALPHABET = [chr(ord('a') + k) for k in range(26)]
 
 
 def lit_gen():
@@ -61,7 +62,7 @@ def generate_lawbook(name):
 
                 anchor = "<a id='#%s'></a>" % entry["norm"]
                 fp.write("<div class='norm'>")
-                fp.write("<div class='normhead'>%s %s</div> %s" % (paragraph, title, anchor))
+                fp.write("<div class='normhead%s'>%s %s</div> %s" % (" marked" if ANNOTATIONS.is_marked(paragraph) else "", paragraph, title, anchor))
                 fp.write("<div class='normtext'>")
 
 

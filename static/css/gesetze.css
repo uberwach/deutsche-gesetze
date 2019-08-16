@@ -33,3 +33,7 @@ body {
 .subsub {
     font-size: 8pt;
 }
+
+.marked {
+    background-color: yellow;
+}

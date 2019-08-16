@@ -6,3 +6,4 @@ python pull_law.py https://www.gesetze-im-internet.de/ustg_1980/BJNR119530979.ht
 python pull_law.py https://www.gesetze-im-internet.de/aktg/BJNR010890965.html data/AktG.json
 python pull_law.py https://www.gesetze-im-internet.de/bgbeg/BJNR006049896.html data/EGBGB.json
 python pull_law.py https://www.gesetze-im-internet.de/inso/BJNR286600994.html data/InsO.json
+python pull_law.py https://www.gesetze-im-internet.de/gewo/BJNR002450869.html data/GewO.json

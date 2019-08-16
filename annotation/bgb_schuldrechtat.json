@@ -1,0 +1,16 @@
+[
+  {
+    "type": "special",
+    "comment": "Teilleistungen sind grundsätzlich nicht vorhanden, entscheidend ist der Wille der Vertragspartner.",
+    "super": "§ 266 BGB",
+    "sub": ["§ 389 BGB",
+            "§ 497 Abs. 3 S. 2 BGB"]
+  },
+
+  {
+    "type": "marked",
+    "norm": ["§ 241", "§ 275",
+             "§ 280", "§ 281", "§ 283", "§ 284", "§ 286",
+             "§ 311a"]
+  }
+]
