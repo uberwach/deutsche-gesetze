@@ -4,11 +4,11 @@ import json
 import os
 import itertools
 from glob import glob
-from annotations import Annotations
+from annotations import load_annotations, Annotations
 
 DATA_DIR = "data"
 STATIC_DIR = "static"
-ANNOTATIONS = Annotations()
+ANNOTATIONS_MAP = load_annotations()
 ALPHABET = [chr(ord('a') + k) for k in range(26)]
 
 
@@ -30,6 +30,7 @@ def lit_gen():
 
 
 def generate_lawbook(name):
+    ANNOTATIONS = ANNOTATIONS_MAP.get(name, Annotations(list()))
 
     with open(os.path.join(STATIC_DIR, "%s.html" % name), "w+") as fp:
         fp.write("""<html>
