@@ -7,11 +7,11 @@ ANNOTATION_DIR = "annotation"
 
 def load_annotations():
     file_names = glob(ANNOTATION_DIR + "/*.json")
-    annotation_map = dict() # maps "BGB" -> the annotation data
+    annotation_map = dict()  # maps "BGB" -> the annotation data
 
     for file_name in file_names:
         print("Getting annotations from %s" % file_name)
-        with open(file_name, "r") as fp:
+        with open(file_name, "r", encoding="utf-8") as fp:
             data = json.load(fp)
             annotation = Annotations(data)
             book_name = _extract_book(file_name)
@@ -49,7 +49,6 @@ class Annotations(object):
         self.__marked = set()
         self._digest_data(data)
 
-
     def _digest_data(self, data):
         for item in data:
             self._digest_item(item)
@@ -60,7 +59,8 @@ class Annotations(object):
         if item_type == "marked":
             norms = item["norm"]
 
-            if not isinstance(norms, list): norms = [norms]
+            if not isinstance(norms, list):
+                norms = [norms]
 
             for norm in norms:
                 self.__marked.add(norm)
@@ -68,3 +68,5 @@ class Annotations(object):
     def is_marked(self, norm):
         return norm in self.__marked
 
+    def __str__(self):
+        return str(self.__marked)

@@ -11,10 +11,12 @@ STATIC_DIR = "static"
 ANNOTATIONS_MAP = load_annotations()
 ALPHABET = [chr(ord('a') + k) for k in range(26)]
 
+print("Annotations found for: %s" % ANNOTATIONS_MAP["BGB"])
+
 
 def read_json(name):
     FILE_PATH = os.path.join(DATA_DIR, "%s.json" % name)
-    data = json.load(open(FILE_PATH, "r"))
+    data = json.load(open(FILE_PATH, "r", encoding="utf-8"))
     return data
 
 
@@ -32,7 +34,7 @@ def lit_gen():
 def generate_lawbook(name):
     ANNOTATIONS = ANNOTATIONS_MAP.get(name, Annotations(list()))
 
-    with open(os.path.join(STATIC_DIR, "%s.html" % name), "w+") as fp:
+    with open(os.path.join(STATIC_DIR, "%s.html" % name), "w+", encoding="utf-8") as fp:
         fp.write("""<html>
         <head>
           <title> %s </title>
@@ -59,25 +61,22 @@ def generate_lawbook(name):
                 paragraph, title = entry["norm"], entry.get("title", "")
                 if title is None: title = ""
 
-                print("Writing %s %s" % (paragraph, name))
+                # print("Writing %s %s" % (paragraph, name))
 
                 anchor = "<a id='#%s'></a>" % entry["norm"]
                 fp.write("<div class='norm'>")
                 fp.write("<div class='normhead%s'>%s %s</div> %s" % (" marked" if ANNOTATIONS.is_marked(paragraph) else "", paragraph, title, anchor))
                 fp.write("<div class='normtext'>")
 
-
                 for absatz in entry["paragraphs"]:
                     fp.write("<div class='abs'>%s" % (absatz["text"]))
 
                     subs = absatz["sub"]
-                    if subs != []:
+                    if subs:
                         fp.write("<div class='subbox'>")
                         for i, sub in enumerate(subs):
                             fp.write("<div class='sub'>%d. %s" % (i+1, sub["text"]))
-
                             subsubs = sub["sub"]
-
 
                             if subsubs != []:
                                 fp.write("<div class='subsubbox'>")
@@ -96,6 +95,7 @@ def generate_lawbook(name):
 
 
         fp.write("</body> </html>")
+
 
 if __name__ == "__main__":
     file_paths = glob(DATA_DIR + "/*.json")
