@@ -17,5 +17,30 @@
   {
     "type": "marked",
     "norm": ["§ 271", "§ 214", "§ 320", "§ 157", "§ 107", "§ 286"]
+  },
+
+  {
+    "type": "marked",
+    "norm": [
+      "§ 134",
+      "§ 138"
+    ]
+  },
+
+  {
+    "type":  "marked",
+    "norm":  ["§ 437", "§ 323", "§ 434", "§ 475", "§ 474"],
+  },
+
+  {
+    "type":  "comment",
+    "place":  "§ 437",
+    "content":  "Die §§ 437 ff. sind dispositiv. Ausnahmen: §§ 444, 475.",
+  },
+
+  {
+    "type":  "comment",
+    "place":  "§ 305",
+    "content":  "Die §§ 305-310 sind der materiell-rechtliche Teil des AGB Rechts, der verfahrensrechtliche Teil findet sich im Unterlassungsklagengesetz UKlaG.",
   }
 ]
