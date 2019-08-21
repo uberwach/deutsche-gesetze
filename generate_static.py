@@ -96,6 +96,78 @@ def generate_lawbook(name):
 
         fp.write("</body> </html>")
 
+def find(x, xs):
+    try:
+        return xs.index(x)
+    except:
+        return -1
+
+def generate_lawbook_gatsby(name):
+    ANNOTATIONS = ANNOTATIONS_MAP.get(name, Annotations(list()))
+
+    with open(os.path.join(STATIC_DIR, "%s.js" % name), "w+", encoding="utf-8") as fp:
+        fp.write("""
+import React from "react"
+import Norm from "../components/norm"
+import Abs from "../components/abs"
+import Sub from "../components/sub"
+import Section from "../components/section"
+
+export default () => (
+<div>
+""")
+        data = read_json(name)
+        section_types = [] # how far we are in depth i.e. ["Buch", "Abschnitt", "Titel"]
+
+        fp.write("<h1>%s</h1>" % name)
+
+        for entry in data:
+            if entry["type"] == "section":
+                title = entry["title"]
+                section_type = title.split(" ")[0]
+
+                idx = find(section_type, section_types)
+                if idx == -1: section_types.append(section_type)
+                else:
+                    fp.write("</Section>" * (len(section_types) - idx))
+                    section_types = section_types[:idx+1]
+
+                fp.write("<Section title={'%s'}>" % title)
+            else:
+                paragraph, title = entry["norm"], entry.get("title", "")
+                if title is None: title = ""
+
+                # print("Writing %s %s" % (paragraph, name))
+
+                fp.write("<Norm norm={'%s'} title={'%s'} marked={%s}>\n" % (paragraph, title, "true" if ANNOTATIONS.is_marked(paragraph) else "false"))
+
+                for absatz in entry["paragraphs"]:
+                    fp.write("<Abs> %s\n" % absatz["text"])
+
+                    subs = absatz["sub"]
+                    if subs:
+                        for i, sub in enumerate(subs):
+                            fp.write("<Sub>%d. %s\n" % (i+1, sub["text"]))
+                            subsubs = sub["sub"]
+
+                            if subsubs != []:
+                                fp.write("<div class='subsubbox'>\n")
+                                letters = lit_gen()
+                                for subsub in subsubs:
+                                    fp.write("<div class='subsub'>%s) %s</div>\n" % (next(letters), subsub["text"]))
+
+                                fp.write("</div>\n") # .subsubbox
+
+                            fp.write("</Sub>\n")
+                    fp.write("</Abs>\n")
+                fp.write("</Norm>\n")
+
+        if section_types:
+            print(section_types)
+            fp.write("</Section>" * (len(section_types)))
+
+        fp.write("</div>)")  # end global div
+
 
 if __name__ == "__main__":
     file_paths = glob(DATA_DIR + "/*.json")
@@ -104,3 +176,4 @@ if __name__ == "__main__":
     for name in file_names:
         print("Generating %s" % name)
         generate_lawbook(name)
+        generate_lawbook_gatsby(name)
